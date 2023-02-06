@@ -1,28 +1,19 @@
 name: Get latest release
 on:
-  workflow_dispatch:
-    inputs:
-      logLevel:
-        description: 'Log level'
-        required: true
-        default: 'warning'
-        type: choice
-        options:
-        - info
-        - warning
-        - debug
-      tags:
-        description: 'Test scenario tags'
-        required: false
-        type: boolean
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
 
 jobs:
-  get-version:
+  update-release-draft:
+    permissions:
+      contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Print date
-        run: echo "The time is $(date)." >> hello.txt
-
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4.2.3
+    - uses: release-drafter/release-drafter@v5
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
