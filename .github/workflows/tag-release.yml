@@ -1,3 +1,4 @@
+name: Tag release
 on:
   push:
     tags:
@@ -7,6 +8,7 @@ jobs:
   writefile:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
     - name: Write file
       run: |
         echo "Hello World" > file.txt
