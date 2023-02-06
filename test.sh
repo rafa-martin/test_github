@@ -4,7 +4,7 @@
 # Fail
 fail() {
     echo "FAIL: $1"
-    exit 0
+    exit 1
 }
 
 fail "This test always fails"
