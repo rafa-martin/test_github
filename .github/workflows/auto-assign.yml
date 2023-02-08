@@ -12,7 +12,7 @@ jobs:
     - uses: wow-actions/auto-assign@v3
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        reviewers: rafa-martin, TheBerbat
-        assignees: rafa-martin, TheBerbat
+        reviewers: rafa-martin, rafa-martin
+        assignees: rafa-martin, rafa-martin
         numberOfReviewers: 1
         numberOfAssignees: 1
