@@ -33,6 +33,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          issue-number: ${{ github.event.number }}
           body: |
-            Image deployed to: ${{ steps.push-image.outputs.image_complete }}. Please test it before merging2.
+            Image deployed to: ${{ steps.push-image.outputs.image_complete }}. Please test it before merging.
