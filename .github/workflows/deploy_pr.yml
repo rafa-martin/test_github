@@ -19,7 +19,7 @@ jobs:
         id: deploy-gh
         run: |
           echo ${{ github.sha }}
-          echo "::set-output name=image::image/image:sha::${{ github.sha }}"
+          echo "image=image/image:sha::${{ github.sha }}" >> $GITHUB_OUTPUT
 
       - name: Print event
         run: echo ${{ github.event }}
