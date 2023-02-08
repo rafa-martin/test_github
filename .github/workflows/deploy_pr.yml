@@ -23,7 +23,7 @@ jobs:
         id: prepare-image
         run: |
           echo "prepare image with version ${{ steps.image-version.outputs.short_sha }}"
-          echo "image_name_complete=\"registy/repo/image/image:<sub-name>-${{steps.image-version.outputs.short_sha}}\"" >> $GITHUB_OUTPUT
+          echo "image_name_complete=\"registy/repo/image/image:\<sub-name\>-${{steps.image-version.outputs.short_sha}}\"" >> $GITHUB_OUTPUT
 
       - name: Building commnet PR
         id: building-comment
