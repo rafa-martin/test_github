@@ -17,10 +17,16 @@ jobs:
       - name: Calculate image version
         id: image-version
         run: |
-          echo "image=image/image:$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
-      - name: Print
-        run: echo "build image and deploy with version ${{ steps.image-version.outputs.image }}"
+      - name: Build image
+        run: echo "build image with version ${{ steps.image-version.outputs.short_sha }}"
+
+      - name: Push image
+        id: push-image
+        run: |
+          echo "push image with version ${{ steps.image-version.outputs.short_sha }}"
+          echo "image_complete=registy/repo/image/image:${{steps.image-version.outputs.short_sha}}" >> $GITHUB_OUTPUT
 
       - name: Add image name to PR
         uses: peter-evans/create-or-update-comment@v2
@@ -29,4 +35,4 @@ jobs:
         with:
           issue-number: ${{ github.event.number }}
           body: |
-            Image deployed to: ${{ steps.deploy-gh.outputs.image }}
+            Image deployed to: ${{ steps.push-image.outputs.image_complete }}. Please test it before merging.
