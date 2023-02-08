@@ -13,17 +13,14 @@ jobs:
       pull-requests: write # for TimonVS/pr-labeler-action to add labels in PR
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Print short SHA
-
-        id: deploy-gh
+      - uses: actions/checkout@v2
+      - name: Calculate image version
+        id: image-version
         run: |
-          echo ${{ github.sha }}
-          echo "image=image/image:${{ github.sha }}" >> $GITHUB_OUTPUT
+          echo "image=image/image:$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
-      - name: Print event
-        run: echo ${{ github.event }}
+      - name: Print
+        run: echo "build image and deploy with version ${{ steps.image-version.outputs.image }}"
 
       - name: Add image name to PR
         uses: peter-evans/create-or-update-comment@v2
