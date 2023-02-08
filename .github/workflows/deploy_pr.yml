@@ -15,11 +15,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Print sha
+      - name: Print short SHA
+
         id: deploy-gh
         run: |
           echo ${{ github.sha }}
-          echo "image=image/image:sha::${{ github.sha }}" >> $GITHUB_OUTPUT
+          echo "image=image/image:${{ github.sha }}" >> $GITHUB_OUTPUT
 
       - name: Print event
         run: echo ${{ github.event }}
