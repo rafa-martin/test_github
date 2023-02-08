@@ -23,7 +23,7 @@ jobs:
         id: prepare-image
         run: |
           echo "prepare image with version ${{ steps.image-version.outputs.short_sha }}"
-          echo "image_name_complete=registy/repo/image/image:<sub-name>-${{steps.image-version.outputs.short_sha}}" >> $GITHUB_OUTPUT
+          echo "image_name_complete=\"registy/repo/image/image:<sub-name>-${{steps.image-version.outputs.short_sha}}\"" >> $GITHUB_OUTPUT
 
       - name: Building commnet PR
         id: building-comment
@@ -50,6 +50,7 @@ jobs:
             Image prepared to be deployed on ${{ steps.image-version.outputs.short_sha }}.
             Please wait for the push to finish before merging.
           reactions: rocket
+          edit-mode: replace
 
       - name: Push image
         id: push-image
@@ -65,3 +66,4 @@ jobs:
           body: |
             Image deployed to: ${{ steps.push-image.outputs.image_complete }}. Please test it before merging.
           reactions: rocket,hooray
+          edit-mode: replace
