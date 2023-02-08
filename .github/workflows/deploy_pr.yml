@@ -49,7 +49,7 @@ jobs:
         with:
           comment-id: ${{ steps.building-comment.outputs.comment-id }}
           body: |
-            Image prepared to be deployed on ${{ steps.image-version.outputs.short_sha }}.
+            Image prepared to be deployed on ${{ steps.prepare-image.outputs.image_name_complete }}.
             Please wait for the push to finish before merging.
           reactions: rocket
           edit-mode: replace
@@ -67,6 +67,7 @@ jobs:
         with:
           comment-id: ${{ steps.pushing-comment.outputs.comment-id }}
           body: |
-            Image deployed to: ${{ steps.push-image.outputs.image_complete }}. Please test it before merging.
+            Image deployed to: ${{ steps.prepare-image.outputs.image_name_complete }}.
+            Please test it before merging.
           reactions: rocket,hooray
           edit-mode: replace
