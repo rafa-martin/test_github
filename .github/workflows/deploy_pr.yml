@@ -19,19 +19,48 @@ jobs:
         run: |
           echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
-      - name: Build image
-        run: echo "build image with version ${{ steps.image-version.outputs.short_sha }}"
-
-      - name: Push image
-        id: push-image
+      - name: Prepare image
+        id: prepare-image
         run: |
-          echo "push image with version ${{ steps.image-version.outputs.short_sha }}"
-          echo "image_complete=registy/repo/image/image:${{steps.image-version.outputs.short_sha}}" >> $GITHUB_OUTPUT
+          echo "prepare image with version ${{ steps.image-version.outputs.short_sha }}"
+          echo "image_name_complete=registy/repo/image/image:<sub-name>-${{steps.image-version.outputs.short_sha}}" >> $GITHUB_OUTPUT
 
-      - name: Add image name to PR
+      - name: Building commnet PR
+        id: building-comment
         uses: peter-evans/create-or-update-comment@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           body: |
+            Image prepared to be deployed on ${{ steps.prepare-image.outputs.image_name_complete }}.
+            Please wait for the build to finish before merging.
+
+      - name: Build image
+        run: echo "build image with version ${{ steps.image-version.outputs.short_sha }}"
+
+      - name: Pushing comment PR
+        id: pushing-comment
+        uses: peter-evans/create-or-update-comment@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          comment-id: ${{ steps.building-comment.outputs.comment-id }}
+          body: |
+            Image prepared to be deployed on ${{ steps.image-version.outputs.short_sha }}.
+            Please wait for the push to finish before merging.
+          reactions: rocket
+
+      - name: Push image
+        id: push-image
+        run: |
+          echo "push image with version ${{ steps.image-version.outputs.short_sha }}"
+
+      - name: Finished comment PR
+        uses: peter-evans/create-or-update-comment@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          comment-id: ${{ steps.pushing-comment.outputs.comment-id }}
+          body: |
             Image deployed to: ${{ steps.push-image.outputs.image_complete }}. Please test it before merging.
+          reactions: rocket,hooray
