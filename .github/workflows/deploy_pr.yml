@@ -37,7 +37,9 @@ jobs:
             Please wait for the build to finish before merging.
 
       - name: Build image
-        run: echo "build image with version ${{ steps.image-version.outputs.short_sha }}"
+        run: |
+          echo "build image with version ${{ steps.image-version.outputs.short_sha }}"
+          sleep 10s
 
       - name: Pushing comment PR
         id: pushing-comment
@@ -56,6 +58,7 @@ jobs:
         id: push-image
         run: |
           echo "push image with version ${{ steps.image-version.outputs.short_sha }}"
+          sleep 10s
 
       - name: Finished comment PR
         uses: peter-evans/create-or-update-comment@v2
