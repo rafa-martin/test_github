@@ -31,6 +31,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          issue-number: ${{ github.event.pull_request.number }}
           body: |
             Image prepared to be deployed on ${{ steps.prepare-image.outputs.image_name_complete }}.
             Please wait for the build to finish before merging.
