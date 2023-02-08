@@ -1,0 +1,20 @@
+name: Auto assign
+on:
+  issues:
+    types: [opened, edited, labeled, unlabeled]
+  pull_request:
+    types: [opened, edited, labeled, unlabeled]
+  
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: wow-actions/auto-assign@v3
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        reviewers: |
+          rafa-martin
+        assignees: |
+          rafa-martin
+        numberOfReviewers: 0
+        numberOfAssignees: 1
