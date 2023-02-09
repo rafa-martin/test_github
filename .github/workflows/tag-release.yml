@@ -23,7 +23,12 @@ jobs:
         git add .
         # get version from tag
         version=${${{ github.ref }}/refs\/tags\//}
+        echo "1"
         git commit -m "Update version to ${version}"
+        echo "2"
         git tag -d ${version}
+        echo "3"
         git tag -m "Release ${version}" ${version}
+        echo "4"
         git push origin --force --tags
+        echo "5"
