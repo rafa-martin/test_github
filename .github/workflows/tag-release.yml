@@ -28,7 +28,7 @@ jobs:
         echo "2"
         git tag -d ${version}
         echo "3"
-        git tag -m "Release ${version}" ${version}
+        git tag ${version}
         echo "4"
         git push origin --force --tags
         echo "5"
