@@ -21,7 +21,8 @@ jobs:
         git config user.name github-actions
         git config user.email github-actions@github.com
         git add .
-        version=${${{ github.ref }}#*-}
+        version=${${{ github.ref }}}
         git commit -m "Update version to ${version}"
+        git tag -d ${version}
         git tag -m "Release ${version}" ${version}
         git push origin --force --tags
