@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<?xml-model
+   href="http://download.ros.org/schema/package_format2.xsd"
+   schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>my_package</name>
+  <version>0.0.0</version>
+  <description>
+    Description of my_package
+  </description>
+  <maintainer email="rmartin@robotnik.es">Rafael Martin</maintainer>
+  <license>Apache License 2.0</license>
+  <url type="website">http://wiki.ros.org/my_package</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+</package>

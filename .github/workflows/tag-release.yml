@@ -9,13 +9,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Write file
+    - name: Update version in package.xml
       run: |
-        echo "Hello World" > file.txt
-    - name: Run autotag.sh
-      run: ./autotag.sh
-    - name: Upload file
-      uses: actions/upload-artifact@v2
-      with:
-        name: file
-        path: file.txt
+        # Remove distro name from tag
+        version=${${{ github.ref }}#*-}
+        # Update version into all files packages.xml
+        find . -name "package.xml" -type f -exec \
+          sed -i "s#<version>.*</version>#<version>${version}</version>#g" {} \;
+    - name: Commit changes
+      run: |
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+        git add .
+        git commit -m "Update version to ${version}"
+        git push
